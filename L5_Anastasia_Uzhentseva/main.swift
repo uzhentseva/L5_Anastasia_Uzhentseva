@@ -12,6 +12,7 @@ protocol CarMovable {
     func move(newDistance: Double) -> String
 }
 
+
 //создаём класс SportCar согласно протокола Car
 //отличительные свойства turboEngine
 class SportCar : Car, CarMovable {
