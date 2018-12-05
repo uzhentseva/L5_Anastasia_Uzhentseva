@@ -6,18 +6,33 @@ import Foundation
 //протокол Car - общий метод подсчёт скорости по времени и расстоянию
 //Вопрос! нужно ли впихивать в протокол переменные расстония и времени или оставлять их в описании классов?
 protocol Car {
+    var time: Double { get set }
+    var distance: Double { get set }
     func calculateSpeed () -> Double
 }
 
+protocol CarMovable {
+    func move() -> Double
+}
+
+
 
 //создаём класс SportCar согласно протокола Car
+//отличительные свойства turboEngine
 class SportCar : Car {
     var time: Double
     var distance: Double
+    var turboEngine: turboEngine
     
-    init(time: Double, distance: Double) {
+    enum turboEngine: String {
+        case rotor = "роторный"
+        case cilinderV = "V-образный мотор"
+    }
+    
+    init(time: Double, distance: Double, turboEngine: turboEngine) {
         self.time = time
         self.distance = distance
+        self.turboEngine = turboEngine
     }
     
     func calculateSpeed() -> Double {
@@ -33,11 +48,14 @@ class TrunkCar: Car {
     let capacity: Double
     var currentLoad: Double
     
-    init(time: Double, distance: Double, capacity: Double, currentLoad: Double) {
+    init?(time: Double, distance: Double, capacity: Double, currentLoad: Double?) {
         self.time = time
         self.distance = distance
         self.capacity = capacity
-        self.currentLoad = currentLoad
+        self.currentLoad = currentLoad!
+        if currentLoad! > capacity {
+                return nil
+            }
     }
     
     func calculateSpeed() -> Double {
@@ -52,45 +70,30 @@ class TrunkCar: Car {
 
 extension SportCar : CustomStringConvertible {
     var description: String {
-        return "Спорткар проехал \(self.distance) км за \(self.time) часов, скорость составила \(self.calculateSpeed()) км/ч"
+        return "Спорткар на двигателе \(self.turboEngine.rawValue) проехал \(self.distance) км за \(self.time) часов, скорость составила \(self.calculateSpeed()) км/ч. \n"
     }
 }
 
 extension TrunkCar : CustomStringConvertible {
     var description: String {
-        return "Грузовик проехал \(self.distance) км за \(self.time) часов, скорость составила \(self.calculateSpeed()) км/ч. Его назрузка составила \(self.currentLoad) из \(self.capacity) возможных."
+        return "Грузовик проехал \(self.distance) км за \(self.time) часов, скорость составила \(self.calculateSpeed()) км/ч. Назрузка составила \(self.currentLoad) из \(self.capacity) возможных.\n"
     }
 }
 
-let sportCar1 = SportCar(time: 4, distance: 520)
+let sportCar1 = SportCar(time: 4, distance: 520, turboEngine: .cilinderV)
 let trunkCar2 = TrunkCar(time: 8, distance: 600, capacity: 500, currentLoad: 100)
 
-//загружаем груз в грузовик
-print(trunkCar2.loadTruck(weight: 300))
+//загружаем груз в грузовик - здесь не идёт подсчёт в дискрипшн!! разобраться почему
+print(trunkCar2!.loadTruck(weight: 300))
 
 
 // дискрипшн не берет новое значение - Вопрос! Как впихнуть туда newValue?
 print(sportCar1.description)
-print(trunkCar2.description)
+print(trunkCar2!.description)
 
 
-//не понимаю как это работает вне описания функции и как это вызывать в экземпляре, само по себе не вызывается
 
-//protocol Engine {
-//    mutating func engineOnOff ()
-//}
-//enum engineState : Engine {
-//    case on, off
-//
-//    mutating func engineOnOff() {
-//        switch self {
-//        case .off:
-//            self = .on
-//        case .on:
-//            self = .off
-//        }
-//    }
-//}
+
 
 
 //условия на проверку скорости
