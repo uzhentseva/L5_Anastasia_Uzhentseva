@@ -12,7 +12,7 @@ protocol Car {
 }
 
 protocol CarMovable {
-    func move(newDistance: Double) -> Double
+    func move(newDistance: Double) -> String
 }
 
 //создаём класс SportCar согласно протокола Car
@@ -33,8 +33,9 @@ class SportCar : Car, CarMovable {
         self.turboEngine = turboEngine
     }
     
-    func move(newDistance: Double) -> Double {
-        return self.distance + newDistance
+    func move(newDistance: Double) -> String {
+        let mov = self.distance + newDistance
+        return "Авто проехало \(mov) км"
     }
     
     func calculateSpeed() -> Double {
@@ -67,8 +68,9 @@ class TrunkCar: Car {
         return self.distance / self.time
     }
     
-    func loadTruck (weight: Double) -> Double {
-        return self.currentLoad + weight
+    func loadTruck (weight: Double) -> String {
+        let load = self.currentLoad + weight
+        return "Грузовик загружен на \(load) кг"
     }
 }
 
