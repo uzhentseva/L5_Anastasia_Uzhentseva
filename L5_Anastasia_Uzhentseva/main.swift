@@ -1,16 +1,13 @@
-//2. Создать расширения для протокола «Car» и реализовать в них методы конкретных действий с автомобилем: открыть/закрыть окно, запустить/заглушить двигатель и т.д. (по одному методу на действие, реализовывать следует только те действия, реализация которых общая для всех автомобилей).
-//3. Создать два класса, имплементирующих протокол «Car» - trunkCar и sportСar. Описать в них свойства, отличающиеся для спортивного автомобиля и цистерны.
-
 import Foundation
 
 //протокол Car - общий метод подсчёт скорости по времени и расстоянию
-//Вопрос! нужно ли впихивать в протокол переменные расстония и времени или оставлять их в описании классов?
 protocol Car {
     var time: Double { get set }
     var distance: Double { get set }
     func calculateSpeed () -> Double
 }
 
+//протокол для спорткара на движение
 protocol CarMovable {
     func move(newDistance: Double) -> String
 }
@@ -33,14 +30,17 @@ class SportCar : Car, CarMovable {
         self.turboEngine = turboEngine
     }
     
+    // расчёт скорости авто
+    func calculateSpeed() -> Double {
+        return self.distance / self.time
+    }
+    
+    // подсчёт нового расстояния
     func move(newDistance: Double) -> String {
         let mov = self.distance + newDistance
         return "Авто проехало \(mov) км"
     }
     
-    func calculateSpeed() -> Double {
-        return self.distance / self.time
-    }
 }
 
 extension SportCar : CustomStringConvertible {
@@ -64,12 +64,17 @@ class TrunkCar: Car {
         self.currentLoad = currentLoad
     }
     
+    // расчёт скорости
     func calculateSpeed() -> Double {
         return self.distance / self.time
     }
     
+    // расчёт новой загрузки
     func loadTruck (weight: Double) -> String {
         let load = self.currentLoad + weight
+        if load > capacity {
+            print("Превышена допустимая вместимость")
+        }
         return "Грузовик загружен на \(load) кг"
     }
 }
@@ -90,5 +95,5 @@ print(sportCar1.description)
 print(trunkCar2.description)
 
 // Как записать это в description?
-print(sportCar1.move(newDistance: 500))
-print(trunkCar2.loadTruck(weight: 200))
+print(sportCar1.move(newDistance: 200))
+print(trunkCar2.loadTruck(weight: 130))
