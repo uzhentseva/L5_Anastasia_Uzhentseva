@@ -15,12 +15,6 @@ protocol CarMovable {
     func move(newDistance: Double) -> Double
 }
 
-//extension Car {
-//
-//}
-
-
-
 //создаём класс SportCar согласно протокола Car
 //отличительные свойства turboEngine
 class SportCar : Car, CarMovable {
@@ -85,7 +79,7 @@ extension TrunkCar : CustomStringConvertible {
 }
 
 
-//создаём экземпляры
+// создаём экземпляры
 let sportCar1 = SportCar(time: 4, distance: 520, turboEngine: .cilinderV)
 let trunkCar2 = TrunkCar(time: 8, distance: 600, capacity: 500, currentLoad: 100)
 
@@ -93,6 +87,6 @@ let trunkCar2 = TrunkCar(time: 8, distance: 600, capacity: 500, currentLoad: 100
 print(sportCar1.description)
 print(trunkCar2.description)
 
-// здесь не идёт подсчёт в дискрипшн!!
-print(sportCar1.move(newDistance: 50))
+// Как записать это в description?
+print(sportCar1.move(newDistance: 500))
 print(trunkCar2.loadTruck(weight: 200))
