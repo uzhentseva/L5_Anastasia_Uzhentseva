@@ -15,6 +15,10 @@ protocol CarMovable {
     func move() -> Double
 }
 
+//extension Car {
+//    
+//}
+
 
 
 //создаём класс SportCar согласно протокола Car
@@ -46,7 +50,14 @@ class TrunkCar: Car {
     var time: Double
     var distance: Double
     let capacity: Double
-    var currentLoad: Double
+    var currentLoad: Double {
+        didSet {
+            print("\(oldValue)")
+        }
+        willSet {
+            print("\(newValue)")
+        }
+    }
     
     init?(time: Double, distance: Double, capacity: Double, currentLoad: Double?) {
         self.time = time
