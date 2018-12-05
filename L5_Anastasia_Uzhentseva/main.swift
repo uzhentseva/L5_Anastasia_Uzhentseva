@@ -81,7 +81,7 @@ class TrunkCar: Car {
 
 extension TrunkCar : CustomStringConvertible {
     var description: String {
-        return "Грузовик проехал \(self.distance) км за \(self.time) часов, скорость составила \(self.calculateSpeed()) км/ч. Назрузка составила \(self.loadTruck) из \(self.capacity) возможных.\n"
+        return "Грузовик проехал \(self.distance) км за \(self.time) часов, скорость составила \(self.calculateSpeed()) км/ч. Назрузка составила \(self.currentLoad) из \(self.capacity) возможных.\n"
     }
 }
 
@@ -94,6 +94,5 @@ let trunkCar2 = TrunkCar(time: 8, distance: 600, capacity: 500, currentLoad: 100
 print(sportCar1.description)
 print(trunkCar2.description)
 
-// Как записать это в description?
 print(sportCar1.move(newDistance: 200))
 print(trunkCar2.loadTruck(weight: 130))
